@@ -1,0 +1,85 @@
+## File Download Microservice
+
+- This microservice allows the user to send a JSON-formatted string and receive either a CSV or Excel file to download to their local files
+
+## Description
+- This microservice utilizes FastAPI as a communication endpoint and uses StringIO to read and write data in memory, allowing it to support large data sets. The service accepts sanitized JSON data and returns the data in either CSV or Excel format. The microservice has implemented the appropriate CORS headers, making it easy to incorporate into a new project.
+
+## Contributors
+- Sarah Van Hoose
+- Samuel Vernick
+
+## Communication Contract
+- Our main method of communication will be our Discord Server.
+- We are expected to respond within 48 hours.
+- In case of upcoming deadlines and a team member is not reachable through Discord for 48 hours, the remaining team members will attempt to contact the team member through Microsoft Teams or university email. If the team member is still not reachable within 24 hours, the remaining team members will convene to decide next steps.
+- Virtual meeting can be requested by any team member if they deem it necessary. Only one additional teammate needs to approve this meeting for it to procced.
+- Work on a microservice should be reasonably split.
+
+
+## API Endpoints
+- POST //file-download
+
+## Getting Started
+For the Testing program:
+You will need to download Node and run 
+```npm install``` 
+to download the dependencies for this program. 
+
+For the main program, filedownload.py, ensure the following libraries are installed: 
+- fastapi
+- pydantic
+- uvicorn
+
+To run the main program continuously, enter the following in your terminal: 
+```uvicorn filedownload:app --reload ```
+
+Don't forget to add your local addressto this code block if testing locally: 
+```origins = ['http://localhost:3000']```
+
+
+
+## Example Request
+User sends POST request containing stringified JSON data for conversion into a CSV or Excel file
+
+Request payloads must match the datatypes defined in myReq in filedownload.py. Empty key-values will trigger a client-side error response: 
+
+```
+class myReq(BaseModel):
+    title: str
+    filetype: str
+    data: list
+```    
+
+myReq.title - contains desired filename
+myReq.filetype - allows the Microservice to determine which file type to stream back to the user
+myReq.data - normalized, stringified JSON. Example from test program: 
+
+```
+[{"title":"MyPokemonTeam","filetype":"CSV","data":[{"pokedex_no":"143","name":"Snorlax","type":"Normal","description":"Its stomach's digestive juices can dissolve any kind of poison. Eating things off the ground doesn't bother it at all."},{"pokedex_no":"568","name":"Trubbish","type":"Poison","description":"Trubbish love to eat garbage, and when they’ve eaten their fill, they belch up poison gas."},{"pokedex_no":"57","name":"Primeape","type":"Fighting","description":"Some researchers theorize that Primeape remains angry even when inside a Poké Ball."},{"pokedex_no":"971","name":"Greavard","type":"Ghost","description":"This friendly Pokémon doesn't like being alone. Pay it even the slightest bit of attention, and it will follow you forever."},{"pokedex_no":"103","name":"Exeggutor","type":"Grass","description":"It is said that on rare occasions, one of its heads will drop off and continue on as an Exeggcute."},{"pokedex_no":"302","name":"Sableye","type":"Dark","description":"This Pokémon is feared. When its gemstone eyes begin to glow with a sinister shine, it's believed that Sableye will steal people's spirits away."}]
+```
+
+
+## Example Success 200
+Sample CSV Data produced from stringified JSON through a POST Request: 
+
+pokedex_no,name,type,description
+143,Snorlax,Normal,Its stomach's digestive juices can dissolve any kind of poison. Eating things off the ground doesn't bother it at all.
+568,Trubbish,Poison,"Trubbish love to eat garbage, and when they’ve eaten their fill, they belch up poison gas."
+57,Primeape,Fighting,Some researchers theorize that Primeape remains angry even when inside a Poké Ball.
+971,Greavard,Ghost,"This friendly Pokémon doesn't like being alone. Pay it even the slightest bit of attention, and it will follow you forever."
+103,Exeggutor,Grass,"It is said that on rare occasions, one of its heads will drop off and continue on as an Exeggcute."
+302,Sableye,Dark,"This Pokémon is feared. When its gemstone eyes begin to glow with a sinister shine, it's believed that Sableye will steal people's spirits away."
+
+
+## Example Error 406
+{
+    status_code=406, detail='Filetype is unsupported for download'
+}
+
+
+## Response Handling
+filedownload.py writes the data to StringIO and streams it back to the user along with a 200 response. Recipient should convert the response to a blob to initiate download through a webpage. See poketable.js for example.  
+
+
+## UML Outline
