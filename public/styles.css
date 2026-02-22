@@ -1,0 +1,21 @@
+table, th, td {
+  border: 1px solid black;
+  text-align: left;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button {
+    margin-left: 80%;
+}
+
+caption {
+    font-size: x-large;
+}
+
+h1 {
+    text-align: center;
+}
