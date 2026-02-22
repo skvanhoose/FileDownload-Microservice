@@ -1,15 +1,14 @@
-## File Download Microservice
-
+File Download Microservice
 - This microservice allows the user to send a JSON-formatted string and receive either a CSV or Excel file to download to their local files
 
-## Description
+Description
 - This microservice utilizes FastAPI as a communication endpoint and uses StringIO to read and write data in memory, allowing it to support large data sets. The service accepts sanitized JSON data and returns the data in either CSV or Excel format. The microservice has implemented the appropriate CORS headers, making it easy to incorporate into a new project.
 
-## Contributors
+Contributors
 - Sarah Van Hoose
 - Samuel Vernick
 
-## Communication Contract
+Communication Contract
 - Our main method of communication will be our Discord Server.
 - We are expected to respond within 48 hours.
 - In case of upcoming deadlines and a team member is not reachable through Discord for 48 hours, the remaining team members will attempt to contact the team member through Microsoft Teams or university email. If the team member is still not reachable within 24 hours, the remaining team members will convene to decide next steps.
@@ -17,10 +16,10 @@
 - Work on a microservice should be reasonably split.
 
 
-## API Endpoints
+API Endpoints
 - POST //file-download
 
-## Getting Started
+Getting Started
 For the Testing program:
 You will need to download Node and run 
 ```npm install``` 
@@ -39,7 +38,7 @@ Don't forget to add your local addressto this code block if testing locally:
 
 
 
-## Example Request
+Example Request
 User sends POST request containing stringified JSON data for conversion into a CSV or Excel file
 
 Request payloads must match the datatypes defined in myReq in filedownload.py. Empty key-values will trigger a client-side error response: 
@@ -60,7 +59,7 @@ myReq.data - normalized, stringified JSON. Example from test program:
 ```
 
 
-## Example Success 200
+#Example Success 200
 Sample CSV Data produced from stringified JSON through a POST Request: 
 
 pokedex_no,name,type,description
@@ -72,14 +71,14 @@ pokedex_no,name,type,description
 302,Sableye,Dark,"This Pokémon is feared. When its gemstone eyes begin to glow with a sinister shine, it's believed that Sableye will steal people's spirits away."
 
 
-## Example Error 406
+Example Error 406
 {
     status_code=406, detail='Filetype is unsupported for download'
 }
 
 
-## Response Handling
+Response Handling
 filedownload.py writes the data to StringIO and streams it back to the user along with a 200 response. Recipient should convert the response to a blob to initiate download through a webpage. See poketable.js for example.  
 
 
-## UML Outline
+UML Outline
