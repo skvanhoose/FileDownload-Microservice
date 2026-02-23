@@ -1,5 +1,5 @@
-downloadButton = document.querySelector('button');
-tableData = document.querySelector('table');
+const downloadButton = document.getElementById('button-container');
+const tableData = document.querySelector('table');
 
 
 // Empty class gets automatically updated
@@ -49,12 +49,13 @@ function toJSON(tableData) {
 }
 
 
-downloadButton.addEventListener('click', () => {
+downloadButton.addEventListener('click', (event) => {
     const payload = {
         title: tableData.querySelector('caption').innerText.replaceAll(' ',''),
-        filetype: 'CSV',
+        filetype: event.target.id,
         data: toJSON(tableData)
     };
+    console.log(payload)
     fetch('http://localhost:8000/file-download',{
         mode: 'cors',
         method: 'POST',
