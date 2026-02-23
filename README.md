@@ -2,7 +2,7 @@
 - This microservice allows the user to send a JSON-formatted string and receive either a CSV or Excel file to download to their local files
 
 ## Description
-- This microservice utilizes FastAPI as a communication endpoint and uses StringIO to read and write data in memory, allowing it to support large data sets. The service accepts sanitized JSON data and returns the data in either CSV or Excel format. The microservice has implemented the appropriate CORS headers, making it easy to incorporate into a new project.
+- This microservice utilizes FastAPI as a communication endpoint and uses StringIO (CSV) or BytesIO (Excel) to read and write data in memory, allowing it to support large data sets. The service accepts sanitized JSON data and returns the data in either CSV or Excel format. The microservice has implemented the appropriate CORS headers, making it easy to incorporate into a new project.
 
 ## Contributors
 - Sarah Van Hoose
@@ -29,6 +29,7 @@ For the main program, filedownload.py, ensure the following libraries are instal
 - fastapi
 - pydantic
 - uvicorn
+- pandas
 
 To run the main program continuously, enter the following in your terminal: 
 ```uvicorn filedownload:app --reload ```
@@ -77,7 +78,7 @@ pokedex_no,name,type,description
 
 
 ## Response Handling
-filedownload.py writes the data to StringIO and streams it back to the user along with a 200 response. Recipient should convert the response to a blob to initiate download through a webpage. See poketable.js for example.  
+filedownload.py writes the data to StringIO and streams it back to the user along with a 200 response. Recipient should convert the response to a blob to initiate download through a webpage. See poketable.js in the TestProgram folder for example.  
 
 
 ## UML Outline
