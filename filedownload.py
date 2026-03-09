@@ -56,8 +56,21 @@ async def stream_file(req: myReq):
         else:
             raise HTTPException(status_code=406, detail='Filetype is unsupported for download')
 
-    except:
-        raise HTTPException(status_code=400, detail='Payload must include title, filetype, and data')
+    except KeyError:
+        raise HTTPException(
+            status_code=400,
+            detail="Payload must include title, filetype, and data"
+    )
+    except IndexError:
+        raise HTTPException(
+            status_code=400,
+            detail="Data must not be empty"
+    )
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to generate file"
+    )
 
     return StreamingResponse(
         output,
